@@ -1,0 +1,52 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+  appName: string;
+}
+
+const { appName } = Astro.props;
+
+const links = [
+  { href: "#producto", label: "Producto" },
+  { href: "#beneficios", label: "Beneficios" },
+  { href: "#como-funciona", label: "Cómo funciona" },
+  { href: "#planes", label: "Planes" },
+  { href: "#preguntas", label: "Preguntas" },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-[var(--line)] bg-[color:var(--page)]/92 backdrop-blur-xl">
+  <div class="section-shell flex h-[72px] items-center justify-between gap-6">
+    <a href="#inicio" class="flex items-center gap-2.5 font-extrabold tracking-[-0.02em]" aria-label={`${appName}, inicio`}>
+      <span class="grid size-9 place-items-center rounded-xl bg-[var(--accent)] text-xl text-[var(--on-accent)]" aria-hidden="true">
+        <i class="ph ph-calendar-check"></i>
+      </span>
+      <span>{appName}</span>
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Navegación principal">
+      {links.map((link) => (
+        <a class="text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--ink)]" href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+
+    <div class="hidden lg:block">
+      <Button href="#planes">Comenzar</Button>
+    </div>
+
+    <details class="mobile-nav relative lg:hidden">
+      <summary class="grid size-11 cursor-pointer list-none place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-xl" aria-label="Abrir navegación">
+        <i class="ph ph-list" aria-hidden="true"></i>
+      </summary>
+      <nav class="absolute right-0 top-14 w-64 rounded-[1.25rem] border border-[var(--line)] bg-[var(--surface)] p-3 shadow-[var(--shadow)]" aria-label="Navegación móvil">
+        {links.map((link) => (
+          <a class="block rounded-xl px-4 py-3 text-sm font-bold hover:bg-[var(--surface-soft)]" href={link.href}>{link.label}</a>
+        ))}
+        <div class="mt-2">
+          <Button href="#planes">Comenzar</Button>
+        </div>
+      </nav>
+    </details>
+  </div>
+</header>

@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "@fontsource-variable/manrope";
+@import "@phosphor-icons/web/regular";
+
+:root {
+  color-scheme: light dark;
+  --page: #f6f8f7;
+  --surface: #ffffff;
+  --surface-soft: #edf3f0;
+  --surface-strong: #e2ece8;
+  --ink: #17201d;
+  --muted: #5c6b66;
+  --line: #d6dfdb;
+  --accent: #16735c;
+  --accent-hover: #105e4b;
+  --accent-soft: #d9eee7;
+  --accent-ink: #0b493a;
+  --on-accent: #f7fffc;
+  --shadow: 0 24px 70px rgb(31 72 59 / 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #101613;
+    --surface: #171f1c;
+    --surface-soft: #1c2823;
+    --surface-strong: #26362f;
+    --ink: #eef5f2;
+    --muted: #a6b6b0;
+    --line: #30423b;
+    --accent: #5ac6a4;
+    --accent-hover: #78d2b6;
+    --accent-soft: #17382d;
+    --accent-ink: #b9f0df;
+    --on-accent: #0b211a;
+    --shadow: 0 24px 70px rgb(0 0 0 / 0.26);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Manrope Variable", system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+summary,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.section-shell {
+  width: min(100% - 2rem, 78rem);
+  margin-inline: auto;
+}
+
+.section-space {
+  padding-block: clamp(4.75rem, 9vw, 8rem);
+}
+
+.surface-card {
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: var(--surface);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  transform: translateY(-160%);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--page);
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (max-width: 767px) {
+  .section-shell {
+    width: min(100% - 1.25rem, 78rem);
+  }
+
+  .section-space {
+    padding-block: 4.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,390 @@
+---
+import { Image } from "astro:assets";
+import heroImage from "../assets/hero-consultorio.png";
+import professionalImage from "../assets/profesional-turnos.png";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import Header from "../components/Header.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+
+const appName = import.meta.env.PUBLIC_APP_NAME || "Turnario";
+
+const problems = [
+  { icon: "ph-chat-circle-dots", title: "Mensajes dispersos", copy: "Pedidos y cambios llegan por distintos canales y se vuelven difíciles de seguir." },
+  { icon: "ph-calendar-x", title: "Huecos inesperados", copy: "Las ausencias sin aviso interrumpen la agenda y reducen el tiempo disponible." },
+  { icon: "ph-folders", title: "Información separada", copy: "Turnos, contactos y notas terminan repartidos entre agendas, archivos y chats." },
+];
+
+const benefits = [
+  { icon: "ph-calendar-dots", title: "Agenda online", copy: "Visualizá el día, reprogramá turnos y mantené horarios claros desde cualquier lugar.", className: "md:col-span-7 benefit-accent" },
+  { icon: "ph-bell-ringing", title: "Recordatorios", copy: "Prepará avisos automáticos para que cada persona recuerde su turno.", className: "md:col-span-5" },
+  { icon: "ph-address-book-tabs", title: "Pacientes organizados", copy: "Encontrá datos de contacto y antecedentes administrativos sin revisar múltiples herramientas.", className: "md:col-span-4" },
+  { icon: "ph-chart-line-down", title: "Menos ausencias", copy: "Confirmaciones claras ayudan a anticipar cancelaciones y recuperar horarios.", className: "md:col-span-4 benefit-soft" },
+];
+
+const steps = [
+  { icon: "ph-sliders-horizontal", title: "Configurá tu agenda", copy: "Definí servicios, duración, horarios y disponibilidad semanal." },
+  { icon: "ph-link", title: "Compartí el acceso", copy: "Enviá un enlace para que soliciten turnos sin cadenas de mensajes." },
+  { icon: "ph-check-circle", title: "Acompañá cada turno", copy: "Revisá confirmaciones, cambios y datos esenciales desde una sola vista." },
+];
+
+const plans = [
+  {
+    name: "Básico",
+    audience: "Para profesionales que trabajan de forma independiente.",
+    price: "USD 12",
+    features: ["1 agenda", "Reservas online", "Recordatorios básicos", "Ficha de contactos"],
+  },
+  {
+    name: "Profesional",
+    audience: "Para una práctica activa que necesita más automatización.",
+    price: "USD 24",
+    features: ["Todo en Básico", "Recordatorios configurables", "Reportes de asistencia", "Soporte prioritario"],
+    featured: true,
+  },
+  {
+    name: "Equipo",
+    audience: "Para centros pequeños con varias agendas.",
+    price: "USD 49",
+    features: ["Hasta 5 agendas", "Roles de equipo", "Vista centralizada", "Incorporación asistida"],
+  },
+];
+
+const comparison = [
+  ["Agendas incluidas", "1", "1", "Hasta 5"],
+  ["Reserva online", "Sí", "Sí", "Sí"],
+  ["Recordatorios configurables", "Básicos", "Sí", "Sí"],
+  ["Reportes de asistencia", "No", "Sí", "Sí"],
+  ["Roles de equipo", "No", "No", "Sí"],
+];
+
+const faqs = [
+  ["¿Necesito instalar un programa?", "No. El servicio está pensado para usarse desde el navegador en computadora, tablet o teléfono."],
+  ["¿Puedo probarlo antes de elegir un plan?", "Sí. La propuesta incluye una prueba inicial para conocer el flujo de trabajo antes de contratar."],
+  ["¿Sirve para profesionales que no son médicos?", "Sí. Puede adaptarse a odontología, psicología, nutrición, kinesiología y otros servicios con agenda."],
+  ["¿Los pagos están activos en esta demostración?", "No. Esta página presenta planes ficticios y no procesa pagos ni solicita datos financieros."],
+  ["¿Puedo administrar varias agendas?", "Sí. El plan Equipo está planteado para centros pequeños con varios profesionales y horarios."],
+];
+---
+
+<BaseLayout
+  title={`${appName} | Turnos simples para profesionales`}
+  description="Sistema de gestión de turnos para profesionales y centros pequeños. Agenda online, recordatorios y organización de pacientes."
+>
+  <Header appName={appName} />
+
+  <main id="contenido">
+    <section id="inicio" class="overflow-hidden pt-8 sm:pt-10 lg:pt-14">
+      <div class="section-shell grid min-h-[calc(100dvh-72px)] items-center gap-10 pb-14 md:grid-cols-[0.92fr_1.08fr] lg:gap-16">
+        <div class="hero-copy max-w-xl">
+          <h1 class="text-balance text-4xl font-extrabold leading-[1.02] tracking-[-0.055em] sm:text-5xl lg:text-6xl">
+            Tus turnos, en orden. <span class="block text-[var(--accent)]">Tu práctica, en foco.</span>
+          </h1>
+          <p class="mt-6 max-w-[48ch] text-lg leading-8 text-[var(--muted)]">
+            Agenda, pacientes y recordatorios en un solo lugar, para trabajar con menos interrupciones.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <Button href="#planes">Comenzar <i class="ph ph-arrow-right" aria-hidden="true"></i></Button>
+            <Button href="#demo" variant="secondary">Solicitar demo</Button>
+          </div>
+        </div>
+
+        <figure class="hero-visual relative">
+          <div class="absolute -inset-5 -z-10 rounded-[2rem] bg-[var(--accent-soft)]"></div>
+          <Image
+            src={heroImage}
+            alt="Profesional de salud organizando su agenda desde una tablet en su consultorio"
+            class="aspect-[3/2] w-full rounded-[1.25rem] object-cover shadow-[var(--shadow)]"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <section id="producto" class="section-space border-y border-[var(--line)] bg-[var(--surface)]">
+      <div class="section-shell grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-24">
+        <div class="reveal lg:sticky lg:top-28 lg:self-start">
+          <SectionHeading
+            eyebrow="El problema"
+            title="La agenda no debería ocupar toda tu atención"
+            copy="Cuando cada cambio exige revisar mensajes y archivos, administrar turnos se convierte en otra tarea clínica."
+          />
+        </div>
+        <div class="reveal grid gap-1">
+          {problems.map((problem) => (
+            <article class="grid grid-cols-[auto_1fr] gap-5 border-b border-[var(--line)] py-7 last:border-0">
+              <span class="grid size-11 place-items-center rounded-xl bg-[var(--accent-soft)] text-xl text-[var(--accent-ink)]" aria-hidden="true">
+                <i class={`ph ${problem.icon}`}></i>
+              </span>
+              <div>
+                <h3 class="text-xl font-extrabold tracking-[-0.02em]">{problem.title}</h3>
+                <p class="mt-2 max-w-[54ch] leading-7 text-[var(--muted)]">{problem.copy}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="beneficios" class="section-space">
+      <div class="section-shell">
+        <div class="reveal">
+          <SectionHeading
+            title="Todo lo necesario para un día más claro"
+            copy="Una base simple para coordinar turnos, anticipar cambios y mantener la información accesible."
+          />
+        </div>
+
+        <div class="mt-12 grid gap-4 md:grid-cols-12">
+          {benefits.map((benefit) => (
+            <article class:list={["surface-card reveal min-h-64 overflow-hidden p-7 sm:p-8", benefit.className]}>
+              <i class={`ph ${benefit.icon} text-3xl text-[var(--accent)]`} aria-hidden="true"></i>
+              <h3 class="mt-16 text-2xl font-extrabold tracking-[-0.03em]">{benefit.title}</h3>
+              <p class="mt-3 max-w-[44ch] leading-7 text-[var(--muted)]">{benefit.copy}</p>
+            </article>
+          ))}
+
+          <article class="surface-card reveal overflow-hidden md:col-span-4">
+            <Image
+              src={professionalImage}
+              alt="Kinesiólogo consultando sus próximos turnos desde el teléfono"
+              class="aspect-[4/3] w-full object-cover object-top"
+              loading="lazy"
+            />
+            <div class="p-7">
+              <i class="ph ph-devices text-3xl text-[var(--accent)]" aria-hidden="true"></i>
+              <h3 class="mt-5 text-2xl font-extrabold tracking-[-0.03em]">Acceso desde distintos dispositivos</h3>
+              <p class="mt-3 leading-7 text-[var(--muted)]">Consultá la agenda desde el consultorio o durante un traslado.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="section-space bg-[var(--surface-soft)]">
+      <div class="section-shell grid items-center gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+        <div class="reveal overflow-hidden rounded-[1.25rem]">
+          <Image
+            src={professionalImage}
+            alt="Profesional independiente organizando la jornada desde su teléfono"
+            class="aspect-[4/5] w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <div class="reveal">
+            <SectionHeading
+              title="Empezar lleva tres decisiones simples"
+              copy="Configurá tu forma de trabajar una vez y usá la misma información para cada jornada."
+            />
+          </div>
+          <div class="mt-9 space-y-3">
+            {steps.map((step) => (
+              <article class="surface-card reveal grid grid-cols-[auto_1fr] gap-5 p-5 sm:p-6">
+                <span class="grid size-12 place-items-center rounded-xl bg-[var(--accent-soft)] text-2xl text-[var(--accent-ink)]" aria-hidden="true">
+                  <i class={`ph ${step.icon}`}></i>
+                </span>
+                <div>
+                  <h3 class="text-lg font-extrabold">{step.title}</h3>
+                  <p class="mt-1.5 leading-7 text-[var(--muted)]">{step.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="planes" class="section-space">
+      <div class="section-shell">
+        <div class="reveal">
+          <SectionHeading
+            eyebrow="Planes"
+            title="Elegí una estructura que acompañe tu práctica"
+            copy="Valores ilustrativos para esta demostración. No se realizan cobros ni se solicitan datos financieros."
+          />
+        </div>
+
+        <div class="mt-12 grid gap-5 lg:grid-cols-3">
+          {plans.map((plan) => (
+            <article class:list={[
+              "surface-card reveal flex flex-col p-7 sm:p-8",
+              plan.featured && "border-[var(--accent)] shadow-[var(--shadow)]",
+            ]}>
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="text-2xl font-extrabold tracking-[-0.03em]">{plan.name}</h3>
+                {plan.featured && <span class="rounded-full bg-[var(--accent-soft)] px-3 py-1 text-xs font-extrabold text-[var(--accent-ink)]">Más elegido</span>}
+              </div>
+              <p class="mt-3 min-h-14 leading-7 text-[var(--muted)]">{plan.audience}</p>
+              <p class="mt-7 text-4xl font-extrabold tracking-[-0.045em]">{plan.price}<span class="text-base font-semibold text-[var(--muted)]"> / mes</span></p>
+              <ul class="mt-7 space-y-3" aria-label={`Características del plan ${plan.name}`}>
+                {plan.features.map((feature) => (
+                  <li class="flex gap-3 text-sm font-semibold">
+                    <i class="ph ph-check-circle mt-0.5 text-lg text-[var(--accent)]" aria-hidden="true"></i>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-8">
+                <Button href="#demo" variant={plan.featured ? "primary" : "secondary"} label={`Comenzar con el plan ${plan.name}`}>Comenzar</Button>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="reveal mt-16 overflow-hidden rounded-[1.25rem] border border-[var(--line)] bg-[var(--surface)]">
+          <div class="border-b border-[var(--line)] px-6 py-5">
+            <h3 class="text-xl font-extrabold">Comparación rápida</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[680px] border-collapse text-left">
+              <caption class="sr-only">Comparación de características entre los planes Básico, Profesional y Equipo</caption>
+              <thead>
+                <tr class="text-sm text-[var(--muted)]">
+                  <th class="px-6 py-4 font-bold">Característica</th>
+                  <th class="px-6 py-4 font-bold">Básico</th>
+                  <th class="px-6 py-4 font-bold">Profesional</th>
+                  <th class="px-6 py-4 font-bold">Equipo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparison.map((row) => (
+                  <tr class="border-t border-[var(--line)]">
+                    {row.map((cell, index) => (
+                      index === 0
+                        ? <th scope="row" class="px-6 py-4 text-sm font-bold">{cell}</th>
+                        : <td class="px-6 py-4 text-sm text-[var(--muted)]">{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space border-y border-[var(--line)] bg-[var(--surface)]" aria-labelledby="testimonios-title">
+      <div class="section-shell">
+        <div class="reveal max-w-3xl">
+          <h2 id="testimonios-title" class="text-balance text-3xl font-extrabold leading-[1.08] tracking-[-0.035em] sm:text-4xl lg:text-5xl">Ejemplos de cómo podría sentirse el cambio</h2>
+          <p class="mt-5 text-base leading-7 text-[var(--muted)] sm:text-lg">Los siguientes testimonios son ficticios y se muestran únicamente como ejemplos de contenido.</p>
+        </div>
+        <div class="mt-12 grid gap-px overflow-hidden rounded-[1.25rem] border border-[var(--line)] bg-[var(--line)] lg:grid-cols-[1.35fr_0.65fr]">
+          <figure class="reveal bg-[var(--surface)] p-8 sm:p-12">
+            <blockquote class="text-balance text-2xl font-bold leading-snug tracking-[-0.025em] sm:text-3xl">“Ahora puedo ver cambios y confirmaciones sin reconstruir el día desde distintos mensajes.”</blockquote>
+            <figcaption class="mt-8">
+              <strong class="block">Dra. Luciana Ferrer</strong>
+              <span class="mt-1 block text-sm text-[var(--muted)]">Odontóloga, testimonio ficticio</span>
+            </figcaption>
+          </figure>
+          <figure class="reveal bg-[var(--surface-soft)] p-8 sm:p-10">
+            <blockquote class="text-xl font-bold leading-relaxed tracking-[-0.02em]">“El equipo comparte una agenda clara y cada profesional conserva su propio ritmo.”</blockquote>
+            <figcaption class="mt-8">
+              <strong class="block">Mateo Roldán</strong>
+              <span class="mt-1 block text-sm text-[var(--muted)]">Kinesiólogo, testimonio ficticio</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="preguntas" class="section-space">
+      <div class="section-shell grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+        <div class="reveal lg:sticky lg:top-28 lg:self-start">
+          <SectionHeading eyebrow="Preguntas frecuentes" title="Lo importante, antes de empezar" />
+        </div>
+        <div class="reveal space-y-3">
+          {faqs.map(([question, answer]) => (
+            <details class="group surface-card p-5 sm:p-6">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-extrabold">
+                <span>{question}</span>
+                <i class="ph ph-plus shrink-0 text-xl text-[var(--accent)] transition group-open:rotate-45" aria-hidden="true"></i>
+              </summary>
+              <p class="mt-4 max-w-[62ch] pr-8 leading-7 text-[var(--muted)]">{answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="pb-6 sm:pb-10">
+      <div class="section-shell reveal overflow-hidden rounded-[1.25rem] border border-[var(--line)] bg-[var(--accent-soft)] px-6 py-14 sm:px-12 sm:py-16 lg:px-20">
+        <div class="max-w-3xl">
+          <h2 class="text-balance text-3xl font-extrabold leading-[1.08] tracking-[-0.04em] sm:text-5xl">Tu próxima jornada puede empezar con más claridad</h2>
+          <p class="mt-5 max-w-[58ch] text-lg leading-8 text-[var(--muted)]">Probá la experiencia o coordiná una demostración pensada para tu forma de trabajar.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <Button href="mailto:hola@turnario.ejemplo">Comenzar</Button>
+            <Button href="mailto:demo@turnario.ejemplo" variant="secondary">Solicitar demo</Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-[var(--line)] py-10">
+    <div class="section-shell grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
+      <div>
+        <a href="#inicio" class="inline-flex items-center gap-2.5 font-extrabold" aria-label={`${appName}, volver al inicio`}>
+          <span class="grid size-9 place-items-center rounded-xl bg-[var(--accent)] text-xl text-[var(--on-accent)]" aria-hidden="true"><i class="ph ph-calendar-check"></i></span>
+          {appName}
+        </a>
+        <p class="mt-4 max-w-md text-sm leading-6 text-[var(--muted)]">Producto, precios y datos de contacto ficticios para una demostración de desarrollo web.</p>
+      </div>
+      <div class="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[var(--muted)]">
+        <a class="hover:text-[var(--ink)]" href="#beneficios">Beneficios</a>
+        <a class="hover:text-[var(--ink)]" href="#planes">Planes</a>
+        <a class="hover:text-[var(--ink)]" href="#preguntas">Preguntas</a>
+        <a class="hover:text-[var(--ink)]" href="mailto:hola@turnario.ejemplo">Contacto</a>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  .hero-copy {
+    animation: hero-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-visual {
+    animation: hero-in 800ms 100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .benefit-accent {
+    background:
+      radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 34%),
+      var(--accent-soft);
+  }
+
+  .benefit-soft {
+    background:
+      linear-gradient(145deg, transparent 55%, color-mix(in srgb, var(--accent) 12%, transparent)),
+      var(--surface);
+  }
+
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 767px) {
+    #inicio .section-shell {
+      min-height: auto;
+      padding-top: 2.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-copy,
+    .hero-visual {
+      animation: none;
+    }
+  }
+</style>
